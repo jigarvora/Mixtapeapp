@@ -2,13 +2,18 @@
 
 <%= will_paginate @songs %>
 
+<%= render 'search' %>
+
 <table>
   <tr>
-    <th>Name</th>
+    <%# debugger %>
+    
+    <th><%= link_to "Name", songs_path(params.merge(:sort => 'name')) %></th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
+
 
 <% @songs.each do |song| %>
   <tr>

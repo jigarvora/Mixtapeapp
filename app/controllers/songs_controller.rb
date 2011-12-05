@@ -2,8 +2,10 @@ class SongsController < ApplicationController
   # GET /songs
   # GET /songs.json
   def index
-    @songs = Song.page(params[:page]).order("name ASC")
-
+ 
+    #@songs = Song.page(params[:page])
+   #@songs = Song.all_or_search(params[:search], :sort => params[:sort])  
+    @songs = Song.page_all_or_search(params[:page], params[:search], params[:sort])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @songs }
