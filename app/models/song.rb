@@ -1,4 +1,9 @@
 class Song < ActiveRecord::Base
+  
+  SortOptions = {
+   :name => {:column => "name", :order => "ASC"}, 
+  }
+  
   belongs_to :artist, :counter_cache => true
   
   has_many :playlists, :inverse_of => :song
@@ -17,6 +22,33 @@ class Song < ActiveRecord::Base
   
   def artist_name=(string)
     self.artist = Artist.find_or_create_by_name(string)
+  end
+  
+  def self.all_or_search(search, params = {})   
+    (search.blank? ? 
+                 self :
+                 self.starts_with(search)
+               ).
+               by(params.slice(:sort, :order))
+               
+  end
+  
+  def self.page_all_or_search(page, search, sort, order)
+    paginate(:per_page => 10, :page => page,
+    :conditions => ['name LIKE ?', "#{search}%"], :order => "name #{order}")
+  end
+  
+  
+  def self.by(options = {})
+    options[:sort] = :name if !options[:sort] || !SortOptions.has_key?(options[:sort].to_sym)
+    
+    sort_sql = "#{SortOptions[options[:sort].to_sym][:column]} "
+    sort_sql += "#{options[:order] || SortOptions[options[:sort].to_sym][:order]}"
+    order(sort_sql)
+  end
+  
+  def self.starts_with(name)
+    self.where("name LIKE :search", :search => "#{name}%")
   end
   
 end

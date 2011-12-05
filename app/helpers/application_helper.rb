@@ -10,4 +10,8 @@ module ApplicationHelper
       end
     end
   end
+  
+  def cleanParms(params)
+    return params.except(:controller, :action)
+  end
 end

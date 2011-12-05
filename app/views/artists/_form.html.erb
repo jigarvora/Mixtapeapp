@@ -13,7 +13,8 @@
 
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.select :name, artist_names, :prompt => 'Select an artist' %>
+    <%#= f.text_field :name %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -1,11 +1,19 @@
 <h1>Listing artists</h1>
 
+<%= will_paginate @artists %>
+
 <%= render 'search' %>
 
 <table>
   <tr>
-    <th><%= link_to "Name", artists_path(params.except(:controller, :action).merge(:sort => 'name')) %></th>
-    <th><%= link_to "Song Count", artists_path(params.except(:controller, :action).merge(:sort => 'songs')) %></th>
+  <th><%= link_to_unless_current("Name", artists_path(params.merge(:sort => 'name', :order => 'asc'))) do %>
+      <%= link_to "Name", artists_path(params.merge(:sort => 'name', :order => 'desc')) %>
+      <% end %>
+    </th>
+    <th><%= link_to_unless_current("Song Count", artists_path(params.merge(:sort => 'songs', :order => 'desc'))) do %>
+      <%= link_to "Song Count", artists_path(params.merge(:sort => 'songs', :order => 'asc')) %>
+      <% end %>
+    </th>
     <th></th>
     <th></th>
     <th></th>

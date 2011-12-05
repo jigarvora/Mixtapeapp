@@ -27,10 +27,13 @@
   # Dir.entries vs Dir.foreach
 
   # Dir.entries("#{Rails.root}/db/seed/songs").each do |file
-
-  puts "Importing #{Rails.root}/db/seed/songs..."
-
-  @songs = Importers::Songs.new_from_dir("#{Rails.root}/db/seed/songs")
+  importDir = ENV['DIR']
+  puts "Importing from #{importDir}.."
+#  rake import:songs[@mixtape]
+  Rake::Task['import:songs'].invoke
+  @songs = Song.all
+#  @songs = Importers::Songs.new_from_dir("#{Rails.root}/db/seed/songs")
+#  @songs = Importers::Songs.new_from_dir(importDir)
 
   @mixtape.playlists << @songs.collect{|s| @mixtape.playlists.build(:song => s)}
 

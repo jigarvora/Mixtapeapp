@@ -23,6 +23,13 @@ class Artist < ActiveRecord::Base
                
   end
   
+  def self.page_all_or_search(page, search, sort, order)
+    sort = :name if !sort
+    col = SortOptions[sort.to_sym][:column]
+    paginate(:per_page => 10, :page => page,
+    :conditions => ["#{col} LIKE :search", :search => "#{search}%"], :order => "#{col} #{order}")
+  end
+  
   def self.by(options = {})
     options[:sort] = :name if !options[:sort] || !SortOptions.has_key?(options[:sort].to_sym)
     

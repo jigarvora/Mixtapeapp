@@ -2,8 +2,8 @@ class ArtistsController < ApplicationController
   # GET /artists
   # GET /artists.json
   def index
-    @artists = Artist.all_or_search(params[:search], :sort => params[:sort])      
-
+    # @artists = Artist.all_or_search(params[:search], :sort => params[:sort], :order => params[:order])      
+    @artists = Artist.page_all_or_search(params[:page], params[:search], params[:sort], params[:order])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @artists }
