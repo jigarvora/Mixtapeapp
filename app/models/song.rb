@@ -33,10 +33,9 @@ class Song < ActiveRecord::Base
                
   end
   
-  def self.page_all_or_search(page, search, sort)
+  def self.page_all_or_search(page, search, sort, order)
     paginate(:per_page => 10, :page => page,
-    :conditions => ['name LIKE ?', "#{search}%"], :order => 'name')
-    #Song.all
+    :conditions => ['name LIKE ?', "#{search}%"], :order => "name #{order}")
   end
   
   

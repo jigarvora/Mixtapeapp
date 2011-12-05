@@ -7,8 +7,10 @@
 <table>
   <tr>
     <%# debugger %>
-    
-    <th><%= link_to "Name", songs_path(params.merge(:sort => 'name')) %></th>
+    <th><%= link_to_unless_current("Name", songs_path(params.merge(:sort => 'name', :order => 'asc'))) do %>
+    <%= link_to "Name", songs_path(params.merge(:sort => 'name', :order => 'desc')) %>
+    <% end %>
+  </th>  
     <th></th>
     <th></th>
     <th></th>

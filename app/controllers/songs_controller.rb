@@ -5,7 +5,7 @@ class SongsController < ApplicationController
  
     #@songs = Song.page(params[:page])
    #@songs = Song.all_or_search(params[:search], :sort => params[:sort])  
-    @songs = Song.page_all_or_search(params[:page], params[:search], params[:sort])
+    @songs = Song.page_all_or_search(params[:page], params[:search], params[:sort], params[:order])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @songs }
